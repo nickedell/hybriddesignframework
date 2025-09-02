@@ -203,7 +203,13 @@ const STAGE_COLORS = {
 
 // ---- Component ----
 export default function HybridFrameworkPro() {
-  const [dark, setDark] = useState(true);
+  const [dark, setDark] = useState(() => {
+    if (typeof window !== "undefined") {
+      return window.matchMedia("(prefers-color-scheme: dark)").matches;
+    }
+    return false; // fallback: light
+  });
+
   const [zoom, setZoom] = useState(1);
   const [showGrid, setShowGrid] = useState(true);
 
